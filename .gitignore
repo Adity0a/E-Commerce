@@ -45,4 +45,19 @@ app-example
 =======
 node_modules
 *.env
+<<<<<<< HEAD
 >>>>>>> 634f021 (Merged client and server into one repo)
+=======
+
+
+# Dependencies
+node_modules/
+
+# Expo
+.expo/
+dist/
+
+# OS files
+.DS_Store
+Thumbs.db
+>>>>>>> ed206f1 (Cleaned up tracking and added proper gitignore)
