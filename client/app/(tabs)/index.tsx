@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "@/components/Header";
 import { BANNERS } from "@/assets/assets";
@@ -26,11 +26,24 @@ export default function index() {
   const [activeBannerIndex, setActiveBannerIndex] = useState(0);
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
+  const bannerRef = useRef<ScrollView>(null);
 
-  const handleScroll = (event: any) => {
+  useEffect(() => {
+    const timer = setInterval(() => {
+      const nextIndex = (activeBannerIndex + 1) % BANNERS.length;
+      bannerRef.current?.scrollTo({ x: nextIndex * (width - 32), animated: true });
+      setActiveBannerIndex(nextIndex);
+    }, 3000);
+
+    return () => clearInterval(timer);
+  }, [activeBannerIndex]);
+
+  const onMomentumScrollEnd = (event: any) => {
     const scrollOffset = event.nativeEvent.contentOffset.x;
     const index = Math.round(scrollOffset / (width - 32));
-    setActiveBannerIndex(index);
+    if (index !== activeBannerIndex) {
+      setActiveBannerIndex(index);
+    }
   };
 
   const categories = [{ id: "all", name: "All", icon: "grid" }, ...CATEGORIES];
@@ -59,12 +72,12 @@ export default function index() {
         {/* Banner Slider */}
         <View className="px-4 mt-2 mb-4">
           <ScrollView
+            ref={bannerRef}
             horizontal
             pagingEnabled
             showsHorizontalScrollIndicator={false}
             className="w-full h-48 rounded-xl"
-            scrollEventThrottle={16}
-            onScroll={handleScroll}
+            onMomentumScrollEnd={onMomentumScrollEnd}
           >
             {BANNERS.map((banner, index) => (
               <View
