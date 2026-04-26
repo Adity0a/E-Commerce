@@ -84,12 +84,26 @@ export default function Profile() {
 
             <View className="bg-white rounded-xl border border-gray-100/75 p-2 mb-4">
               {PROFILE_MENU.map((item, index) => (
-                <TouchableOpacity key={item.id} className={`flex-row items-center p-4 ${index !== PROFILE_MENU.length - 1 ? "border-b border-gray-100" : ""}`}>
+                <TouchableOpacity
+                  key={item.id}
+                  onPress={() => item.route && router.push(item.route as any)}
+                  className={`flex-row items-center p-4 ${index !== PROFILE_MENU.length - 1 ? "border-b border-gray-100" : ""}`}
+                >
                   <View className="w-10 h-10 bg-surface rounded-full items-center justify-center mr-4">
-                    <Ionicons name={item.icon as any} size={20} color={COLORS.primary} />
+                    <Ionicons
+                      name={item.icon as any}
+                      size={20}
+                      color={COLORS.primary}
+                    />
                   </View>
-                  <Text className="flex-1 text-primary  font-medium">{item.title}</Text>
-                  <Ionicons name="chevron-forward" size={20} color={COLORS.secondary} />
+                  <Text className="flex-1 text-primary  font-medium">
+                    {item.title}
+                  </Text>
+                  <Ionicons
+                    name="chevron-forward"
+                    size={20}
+                    color={COLORS.secondary}
+                  />
                 </TouchableOpacity>
               ))}
             </View>
