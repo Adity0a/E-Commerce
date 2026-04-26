@@ -19,8 +19,15 @@ export const getDashboardStats = async (req: Request, res: Response) => {
     const recentOrders = await Order.find().sort("-createdAt").limit(5).populate("user", "name email");
 
     res.json({
-
-    })
+        success: true,
+        data: {
+            totalUsers,
+            totalProducts,
+            totalOrders,
+            totalRevenue,
+            recentOrders
+        }
+    });
 
   } catch (error: any) {
     res.status(500).json({ success: false, message: error.message });

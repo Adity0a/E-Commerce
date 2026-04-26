@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ScrollView, Text, TextInput, TouchableOpacity, View, Switch, Image, ActivityIndicator, Modal, FlatList, TouchableWithoutFeedback, Platform, } from "react-native";
+import { ScrollView, Text, TextInput, TouchableOpacity, View, Switch, Image, ActivityIndicator, Modal, FlatList, TouchableWithoutFeedback, Platform } from "react-native";
 import Toast from 'react-native-toast-message';
 import { COLORS } from "@/constants";
 import { Ionicons } from "@expo/vector-icons";
@@ -70,15 +70,26 @@ export default function AddProduct() {
                 formData.append(key, value))
 
             // Images
+            for (const [i, uri] of images.entries()) {
+                const filename = uri.split('/').pop() || `image-${i}.jpg`;
+                const match = /\.(\w+)$/.exec(filename);
+                const type = match ? `image/${match[1]}` : `image/jpeg`;
 
-            for(const [i, uri] of images.entries()){
-                const filename = `images-${i}.jpg`;
-
-                formData.append("images", {uri, name: filename, type: "image/jpg"}as any)
+                formData.append("images", {
+                    uri: Platform.OS === 'android' ? uri : uri.replace('file://', ''),
+                    name: filename,
+                    type: type
+                } as any);
             }
 
-            const {data} = await api.post("/products", formData, {
-                headers: { Authorization: `Bearer ${token}`},
+            const { data } = await api.post("/products", formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    Authorization: `Bearer ${token}`
+                },
+                transformRequest: (data, headers) => {
+                    return data; // Keep formData as is
+                },
             })
             
             if(!data?.success) throw new Error("Upload failed")

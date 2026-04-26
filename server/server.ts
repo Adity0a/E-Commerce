@@ -11,6 +11,7 @@ import Order from "./models/Order.js";
 import OrderRouter from "./routes/ordersRoutes.js";
 import AddressRouter from "./routes/addressRoutes.js";
 import AdminRouter from "./routes/adminRoutes.js";
+import { seedProducts } from "./scripts/seedProducts.js";
 
 
 const app = express();
@@ -39,6 +40,13 @@ app.use("/api/addresses", AddressRouter)
 app.use("/api/admin", AdminRouter)
 
 await makeAdmin(); 
+
+// Seed dummy products if no products are present
+// try {
+//   await seedProducts(process.env.MONGODB_URI as string);
+// } catch (error) {
+//   console.error("Failed to seed products:", error);
+// }
 
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
