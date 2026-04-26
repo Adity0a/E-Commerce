@@ -62,7 +62,7 @@ export default function CartItem({
             <TouchableOpacity
               className="p-1"
               onPress={() =>
-                onUpdateQuantity && onUpdateQuantity(item.quantity - 1)
+                onUpdateQuantity && onUpdateQuantity(item.quantity + 1)
               }
             >
               <Ionicons name="add" size={16} color={COLORS.primary} />

@@ -33,7 +33,7 @@ export const addToCart = async (req: Request, res: Response) => {
     if(!product){
         return res.status(404).json({success: false, message: "Product not found"});
     }
-    if(!product){
+    if(product.stock < quantity){
         return res.status(400).json({success: false, message:"Insufficient stock"});
     }
 
