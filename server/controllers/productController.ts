@@ -6,8 +6,12 @@ import cloudinary from "../config/cloudinary.js";
 // Get /api/products
 export const getProducts = async (req: Request, res: Response) => {
   try {
-    const { page = 1, limit = 10 } = req.query;
+    const { page = 1, limit = 10, category } = req.query;
     const query: any = { isActive: true };
+
+    if (category && category !== "All") {
+      query.category = { $regex: new RegExp(`^${category}$`, "i") };
+    }
 
     const total = await Product.countDocuments(query);
     const products = await Product.find(query)

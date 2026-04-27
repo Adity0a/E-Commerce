@@ -1,12 +1,14 @@
-import { View, Text } from "react-native";
+import { View, Text, Platform } from "react-native";
 import React from "react";
 import { Tabs } from "expo-router";
 import { Feather, Ionicons } from "@expo/vector-icons";
 import { useCart } from "@/context/CartContext";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function TabLayout() { 
 
   const {cartItems} = useCart()
+  const insets = useSafeAreaInsets();
 
   return (
     <Tabs
@@ -19,8 +21,9 @@ export default function TabLayout() {
           backgroundColor: "#fff",
           borderTopWidth: 1,
           borderTopColor: "#F0F0F0",
-          height: 56,
-          paddingTop: 8,
+          height: Platform.OS === 'ios' ? 88 : 60 + insets.bottom,
+          paddingBottom: insets.bottom > 0 ? insets.bottom : 10,
+          paddingTop: 10,
         },
       }}
     >

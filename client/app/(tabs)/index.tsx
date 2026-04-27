@@ -90,7 +90,7 @@ export default function index() {
                   className="w-full h-full h-48"
                   resizeMode="cover"
                 />
-                
+
                 <View className="absolute inset-0 bg-black/40" />
 
                 <View className="absolute bottom-4 left-4 z-10">
@@ -135,7 +135,7 @@ export default function index() {
                 onPress={() =>
                   router.push({
                     pathname: "/shop",
-                    params: { category: cat.id === "all" ? "" : cat.name },
+                    params: { category: cat.name === "All" ? "" : cat.name },
                   })
                 }
               />

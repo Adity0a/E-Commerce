@@ -5,6 +5,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { COLORS } from "@/constants";
 import { useRouter } from "expo-router";
 import { useCart } from "@/context/CartContext";
+import { useDrawer } from "@/context/DrawerContext";
 
 export default function Header({
   title,
@@ -16,7 +17,8 @@ export default function Header({
 }: HeaderProps) {
 
     const router = useRouter();
-    const {itemCount} = useCart() // Replace with actual cart item count from state or context
+    const {itemCount} = useCart()
+    const { openDrawer } = useDrawer();
 
   return (
     <View className="flex-row items-center justify-between px-4 py-3 bg-white relative min-h-[56px]">
@@ -29,7 +31,7 @@ export default function Header({
         )}
 
         {showMenu && (
-          <TouchableOpacity className="mr-3">
+          <TouchableOpacity className="mr-3" onPress={openDrawer}>
             <Ionicons name="menu-outline" size={28} color={COLORS.primary} />
           </TouchableOpacity>
         )}

@@ -1,4 +1,3 @@
-import { dummyWishlist } from "@/assets/assets";
 import { Product, WishlistContextType } from "@/constants/types";
 import {
   createContext,
@@ -18,7 +17,7 @@ export function WishlistProvider({ children }: { children: ReactNode }) {
 
   const fetchWishlist = async () => {
     setLoading(true);
-    setWishlist(dummyWishlist);
+    setWishlist([]);
     setLoading(false);
   };
 

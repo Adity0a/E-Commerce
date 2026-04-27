@@ -8,8 +8,10 @@ import { COLORS } from "@/constants";
 import { FlatList, TextInput } from "react-native-gesture-handler";
 import ProductCard from "@/components/ProductCard";
 import api from "@/constants/api";
+import { useLocalSearchParams } from "expo-router";
 
 export default function Shop() {
+  const { category } = useLocalSearchParams<{ category?: string }>();
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
@@ -23,7 +25,11 @@ export default function Shop() {
       setLoadingMore(true);
     }
     try {
-      const queryParams = {page: pageNumber, limit: 10};
+      const queryParams = {
+        page: pageNumber,
+        limit: 10,
+        category: category || undefined
+      };
       const {data} = await api.get('/products',{params:queryParams})
 
       if(pageNumber===1){
@@ -51,7 +57,7 @@ export default function Shop() {
 
   useEffect(() => {
     fetchProducts(1);
-  }, []);
+  }, [category]);
 
   return (
     <SafeAreaView className="flex-1 bg-surface" edges={["top"]}>
