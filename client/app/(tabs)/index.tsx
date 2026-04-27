@@ -135,7 +135,7 @@ export default function index() {
                 onPress={() =>
                   router.push({
                     pathname: "/shop",
-                    params: { category: cat.name === "All" ? "" : cat.name },
+                    params: { category: cat.id === "all" ? "" : cat.name },
                   })
                 }
               />
