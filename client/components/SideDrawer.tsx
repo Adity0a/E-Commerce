@@ -8,7 +8,7 @@ import {
   Dimensions,
   Image,
 } from "react-native";
-import { Ionicons, Feather, MaterialCommunityIcons } from "@expo/vector-icons";
+import { Ionicons} from "@expo/vector-icons";
 import { useRouter, usePathname } from "expo-router";
 import { useDrawer } from "@/context/DrawerContext";
 import { COLORS } from "@/constants";

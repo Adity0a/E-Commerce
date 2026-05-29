@@ -1,9 +1,10 @@
-import { View, Text, Platform } from "react-native";
+import { View, Platform } from "react-native";
 import React from "react";
 import { Tabs } from "expo-router";
 import { Feather, Ionicons } from "@expo/vector-icons";
 import { useCart } from "@/context/CartContext";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { COLORS } from "@/constants";
 
 export default function TabLayout() { 
 
@@ -14,7 +15,7 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: "COLORS.primary",
+        tabBarActiveTintColor: COLORS.primary,
         tabBarInactiveTintColor: "#CDCDE0",
         tabBarShowLabel: false,
         tabBarStyle: {
@@ -45,7 +46,6 @@ export default function TabLayout() {
         options={{
           tabBarIcon: ({ color, focused }) => (
             <View className="relative">
-
               <Feather
                 name={focused ? "shopping-cart" : "shopping-cart"}
                 size={26}

@@ -1,0 +1,204 @@
+•npx create-expo-app@latest         give project name in myapp
+•npx run reset-project     click "n" to delete other folder
+
+#tailwindcss(nativewind)
+
+• npm install nativewind react-native-reanimated react-native-safe-area-context 
+
+•npm install --dev tailwindcss@^3.4.17 prettier-plugin-tailwindcss@^0.5.11 babel-preset-expo
+
+paste both command and install
+
+create 4 files global.css, babel.config.js, metro.config.js, nativewind-env.d.ts
+
+in app.json add this line in web  "bundler": "metro"
+
+• import "../global.css" add this line in _layout.tsx
+
+
+
+
+#Backend Setup using expressjs 
+
+•config folder are for 
+•controllers folder are for 
+•models folder are for mongoodb database architecture
+•routes folder are for
+•scripts folder are for
+•types folder are for
+
+•npm init -y
+•npm install express cors dotenv
+•npm install -D typescript tsx @types/node ts-node @types/express nodemon @types/cors
+•npx tsc --init
+
+•In tsconfig.json add this line
+
+{
+    "compilerOptions": {
+        "target": "ES2020",
+        "module": "nodenext",
+        "moduleResolution":"nodenext",
+        "outDir": "./dist",
+        "rootDir": "./",
+        "strict": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true
+    },
+    "include": [
+        "./**/*.ts"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}
+
+• create server.ts file and add this code
+
+import "dotenv/config";
+import express, { Request, Response } from 'express';
+import cors from "cors";
+
+const app = express();
+
+// Middleware
+app.use(cors())
+app.use(express.json());
+
+const port = process.env.PORT || 3000;
+
+app.get('/', (req: Request, res: Response) => {
+    res.send('Server is Live!');
+});
+
+app.listen(port, () => {
+    console.log(`Server is running at http://localhost:${port}`);
+});
+
+
+• In package.json add this scripts
+
+"scripts": {
+    "start": "tsx server.ts",
+    "server": "nodemon --exec tsx server.ts",
+    "build": "tsc"
+}
+
+• or add type module in package.json 
+
+  "main": "index.js",
+  "scripts": {
+    "start": "tsx server.ts",
+    "server": "nodemon --exec tsx server.ts",
+    "build": "tsc"
+  },
+  "type": "module",
+  "keywords": [],
+  "author": "",
+
+•in main replace "index.js" with "yourfilename" server.js
+•then run "npm run server"
+
+#Now connect server with database "mongodb"
+
+•go to mongoose --> create account --> create project --> create cluster --> create deployment --> set user name and password or copy it --> create database user --> choose connection method --> choose drivers --> copy npm install mongoose command and install in terminal --> copy mongodb uri (mongodb.net/cluster0) replace this cluster0 to databasename "ecom" --> done
+
+•In vscode install "npm install mongoose" 
+
+• Add ip address so you can access from anywhere go to security --> database & network Access --> In newtwork access --> then IP access list --> click on edit icon and add "0.0.0.0" and click save after few second it show status as active
+
+create a new folder "config" create a new file db.ts here we create configuration connecting with database
+
+**db.ts
+
+import mongoose from "mongoose";
+import dns from "node:dns";
+
+dns.setServers(["8.8.8.8", "8.8.4.4"]);
+
+const connectDB = async ()=> {
+    mongoose.connection.on('connected', ()=>{
+        console.log("MongoDB connected");
+    })
+    await mongoose.connect(process.env.MONGODB_URI as string)
+}
+
+export default connectDB
+
+
+
+#Add clerk authentication using expressjs in mongodb database so user login or other add in database
+
+•clerk docs
+
+#express
+•npm install @clerk/express
+•copy security key and paste in .env
+•import { clerkMiddleware } from '@clerk/express' <-- Add this line in server.ts or 
+
+•"app.use(clerkMiddleware());"
+
+# Webhook setup so user data can store in database
+
+In search box search webhook and select "sync clerk data to your with webhook"
+
+•copy all 3 secret key and paste in .env 
+•create new folder controllers --> create file "webhook.ts" 
+•In clerk webhook docs "index.ts" copy code from try-catch code and paste in add this in req: Request or res: Response import this also or import verifyWebhook also 
+
+•there is "types" folder must add this folder from downloads
+
+•now create models folder --> create User.ts folder and add all what you want to add in mongodb database
+
+•Now go clerk dashboard -->configure-->developer-->click add endpoint --> webhooks in url choose "with Svix Play" or in subscribe to events add "user" --> click on create after that you get signing secret copy that and paste in clerk_webhook_signing_secret
+
+•create vercel.json file and paste below code
+
+  {
+    "version": 2,
+    "builds": [
+        {
+            "src": "server.ts",
+            "use": "@vercel/node",
+            "config": {
+                "includeFiles": [
+                    "dist/**"
+                ]
+            }
+        }
+    ],
+    "routes": [
+        {
+            "src": "/(.*)",
+            "dest": "server.ts"
+        }
+    ]
+}
+
+and deploy your backend in vercel with all secret key and copy the vercel generated domain url.
+
+•open clerk webhooks dashboard click on edit button and paste vercel domain url and click save
+
+• app.post('/api/clerk', express.raw({type: 'application/json'}), clerkWebhook) <-- add this line in server.ts file refer for more server.ts file
+
+• ** Imp point in vercel generated domain url apply some change 
+
+       https://e-commerce-pied-gamma-57.vercel.app/api/clerk in clerk webhook dashboard and click save 
+
+•now you view login users in mongodb and clerk dashboard
+
+•now if you want to create a user as admin then in .env file add this ADMIN_EMAIL="college3696@gmail.com" 
+•create script folder in script create makeAdmin.ts and write logic for admin
+
+•create a cloudinary account and copy all secret keys 
+    •cloudname
+    •cloudapikey
+    •cloudapisecret
+
+•In config folder create cloudinary.ts file or npm install cloudinary multer or npm install -D @types/multer
+
+•write logic in controller, routes and Middleware "upload.ts" file
+npm install axios
+
+

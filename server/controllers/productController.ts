@@ -76,7 +76,7 @@ export const createProduct = async (req: Request, res: Response) => {
     if (typeof sizes === "string") {
       try {
         sizes = JSON.parse(sizes);
-      } catch (e) {
+      } catch (error) {
         sizes = sizes
           .split(",")
           .map((s: string) => s.trim())

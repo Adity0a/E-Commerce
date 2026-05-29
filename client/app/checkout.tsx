@@ -12,7 +12,6 @@ import { ScrollView } from "react-native-gesture-handler";
 import { Ionicons } from "@expo/vector-icons";
 import { useAuth } from "@clerk/clerk-expo";
 import api from "@/constants/api";
-import { setItem } from "expo-secure-store";
 
 export default function checkout() {
 

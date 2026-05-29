@@ -13,7 +13,6 @@ import Header from "@/components/Header";
 import { BANNERS } from "@/assets/assets";
 import { useRouter } from "expo-router";
 import { CATEGORIES } from "@/constants";
-import { Ionicons } from "@expo/vector-icons";
 import CategoryItem from "@/components/CategoryItem";
 import { Product } from "@/constants/types";
 import ProductCard from "@/components/ProductCard";
